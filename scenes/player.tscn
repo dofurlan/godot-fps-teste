@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1r0u2g4fko05"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_50mvv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uqb27"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rs1fs"]
+
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("CAMERA_CONTROLLER")]
+collision_mask = 13
+script = ExtResource("1_50mvv")
+CAMERA_CONTROLLER = NodePath("camera-node/Camera3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_uqb27")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_rs1fs")
+skeleton = NodePath("../..")
+
+[node name="camera-node" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="camera-node"]
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="camera-node/Camera3D"]
+update_mode = 1
+enable_shadows = true
+
+[node name="shooting-anchor" type="Node3D" parent="camera-node/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)

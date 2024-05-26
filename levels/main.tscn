@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://e2e5h6yi61lm"]
+
+[ext_resource type="PackedScene" uid="uid://cy8w05y8frac" path="res://scenes/world_environment.tscn" id="1_g04hr"]
+[ext_resource type="Script" path="res://levels/main.gd" id="1_qdxt2"]
+[ext_resource type="PackedScene" uid="uid://b1r0u2g4fko05" path="res://scenes/player.tscn" id="2_wkyon"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_s5fuk"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_alj0l"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g1ttw"]
+albedo_color = Color(0.168572, 0.301683, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_wxhpx"]
+material = SubResource("StandardMaterial3D_g1ttw")
+size = Vector3(4, 4, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v44le"]
+size = Vector3(4, 4, 4)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_qdxt2")
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("1_g04hr")]
+
+[node name="floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+layers = 4
+mesh = SubResource("BoxMesh_s5fuk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="floor"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="floor/StaticBody3D"]
+shape = SubResource("BoxShape3D_alj0l")
+
+[node name="player" parent="." instance=ExtResource("2_wkyon")]
+
+[node name="boxes" type="Node3D" parent="."]
+
+[node name="box" type="MeshInstance3D" parent="boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
+layers = 4
+mesh = SubResource("BoxMesh_wxhpx")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="boxes/box"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="boxes/box/StaticBody3D"]
+shape = SubResource("BoxShape3D_v44le")
+
+[node name="box2" type="MeshInstance3D" parent="boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 2, 10)
+layers = 4
+mesh = SubResource("BoxMesh_wxhpx")
+skeleton = NodePath("../box")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="boxes/box2"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="boxes/box2/StaticBody3D"]
+shape = SubResource("BoxShape3D_v44le")
+
+[node name="box3" type="MeshInstance3D" parent="boxes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 2, -5)
+layers = 4
+mesh = SubResource("BoxMesh_wxhpx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="boxes/box3"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="boxes/box3/StaticBody3D"]
+shape = SubResource("BoxShape3D_v44le")
+
+[node name="mob-timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="mob-timer" to="." method="_on_mobtimer_timeout"]

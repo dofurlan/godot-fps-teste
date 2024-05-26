@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy8w05y8frac"]
+
+[sub_resource type="Sky" id="Sky_07hmq"]
+
+[sub_resource type="Environment" id="Environment_i68j3"]
+background_color = Color(1, 1, 1, 1)
+sky = SubResource("Sky_07hmq")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+reflected_light_source = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_i68j3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.803088, -0.392909, -0.447963, 0.0695626, -0.684831, 0.725374, -0.591785, -0.613701, -0.522648, 0, 0, 0)

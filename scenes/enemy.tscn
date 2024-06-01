@@ -20,3 +20,5 @@ shape = SubResource("CapsuleShape3D_3xj6d")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_e7kot")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

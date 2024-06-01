@@ -1,16 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy8w05y8frac"]
+[gd_scene load_steps=5 format=3 uid="uid://cy8w05y8frac"]
 
-[sub_resource type="Sky" id="Sky_07hmq"]
+[ext_resource type="Texture2D" uid="uid://6o4towdmbc8n" path="res://assets/environment/autumn_field_puresky_2k.hdr" id="1_oyega"]
 
-[sub_resource type="Environment" id="Environment_i68j3"]
-background_color = Color(1, 1, 1, 1)
-sky = SubResource("Sky_07hmq")
-ambient_light_source = 3
-ambient_light_color = Color(1, 1, 1, 1)
-reflected_light_source = 2
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_70sx5"]
+panorama = ExtResource("1_oyega")
+
+[sub_resource type="Sky" id="Sky_msui6"]
+sky_material = SubResource("PanoramaSkyMaterial_70sx5")
+
+[sub_resource type="Environment" id="Environment_lbh17"]
+background_mode = 2
+sky = SubResource("Sky_msui6")
 
 [node name="WorldEnvironment" type="WorldEnvironment"]
-environment = SubResource("Environment_i68j3")
+environment = SubResource("Environment_lbh17")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.803088, -0.392909, -0.447963, 0.0695626, -0.684831, 0.725374, -0.591785, -0.613701, -0.522648, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -0.369747, 0.929133, 0, -0.929133, -0.369747, 0, 31, 0)
+shadow_enabled = true

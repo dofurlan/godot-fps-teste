@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b1r0u2g4fko05"]
+[gd_scene load_steps=7 format=3 uid="uid://b1r0u2g4fko05"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_50mvv"]
+[ext_resource type="Script" path="res://scripts/state_machine.gd" id="2_xkp3q"]
+[ext_resource type="Script" path="res://scenes/IdlePlayerState.gd" id="3_0j7s7"]
+[ext_resource type="Script" path="res://scenes/WalkingPlayerState.gd" id="4_10jod"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uqb27"]
 
@@ -30,3 +33,13 @@ enable_shadows = true
 
 [node name="shooting-anchor" type="Node3D" parent="camera-node/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("CURRENT_STATE")]
+script = ExtResource("2_xkp3q")
+CURRENT_STATE = NodePath("IdlePlayerState")
+
+[node name="IdlePlayerState" type="Node" parent="StateMachine"]
+script = ExtResource("3_0j7s7")
+
+[node name="WalkingPlayerState" type="Node" parent="StateMachine"]
+script = ExtResource("4_10jod")

@@ -39,7 +39,8 @@ func on_child_transition(new_state_name:StringName) -> void:
 	print('Changing from %s to %s' % [CURRENT_STATE.name, new_state_name])
 	
 	CURRENT_STATE.exit()
+	new_state.enter()
 	CURRENT_STATE = new_state
-	CURRENT_STATE.enter()
+	
 	
 

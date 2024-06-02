@@ -10,6 +10,9 @@ var projectile_scene:PackedScene
 @export var CAMERA_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
 
+@export var ACCELERATION:float = 0.1
+@export var DECELERATION:float = 0.4
+
 var _mouse_input : bool = false
 var _rotation_input : float
 var _tilt_input : float
@@ -70,21 +73,22 @@ func _physics_process(delta):
 
 	_update_camera(delta)
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = lerp(velocity.x, direction.x * SPEED,ACCELERATION)
+		velocity.z = lerp(velocity.z, direction.z * SPEED,ACCELERATION)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, DECELERATION)
+		velocity.z = move_toward(velocity.z, 0, DECELERATION)
+
+		#var vel = Vector2(velocity.x,velocity.z)
+		#var temp = move_toward(Vector2(velocity.x,velocity.z).length(), 0, DECELERATION)
+		#velocity.x = vel.normalized().x * temp
+		#velocity.z = vel.normalized().y * temp
 
 	move_and_slide()
 
